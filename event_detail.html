@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Detail</title>
+</head>
+<body>
+    <h1>{{ event.title }}</h1>
+    <p>{{ event.description }}</p>
+    <p>Location: {{ event.location }}</p>
+    <p>Start Time: {{ event.start_time }}</p>
+    <p>End Time: {{ event.end_time }}</p>
+    {% if 'user_id' in session %}
+        <form method="post" action="{{ url_for('rsvp', event_id=event.id) }}">
+            <label for="status">RSVP Status:</label>
+            <select name="status" id="status">
+                <option value="Going">Going</option>
+                <option value="Not Going">Not Going</option>
+                <option value="Maybe">Maybe</option>
+            </select>
+            <button type="submit">RSVP</button>
+        </form>
+    {% else %}
+        <p>You need to log in to RSVP.</p>
+        <a href="{{ url_for('login') }}">Login</a>
+    {% endif %}
+    <a href="{{ url_for('index') }}">Back to Events</a>
+</body>
+</html>

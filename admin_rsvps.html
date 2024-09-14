@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSVPs for {{ event.title }}</title>
+</head>
+<body>
+    <h1>RSVPs for {{ event.title }}</h1>
+    <ul>
+        {% for rsvp in rsvps %}
+            <li>{{ rsvp.user.name }} ({{ rsvp.user.email }}) - {{ rsvp.status }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('index') }}">Back to Events</a>
+</body>
+</html>
