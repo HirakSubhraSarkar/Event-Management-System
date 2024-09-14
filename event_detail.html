@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #007bff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        p {
+            margin: 10px 0;
+        }
+        h2 {
+            color: #007bff;
+            margin-top: 20px;
+        }
+        form {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="email"],
+        select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ event.title }}</h1>
+        <p>{{ event.description }}</p>
+        <p>Location: {{ event.location }}</p>
+        <p>Start Time: {{ event.start_time }}</p>
+        <p>End Time: {{ event.end_time }}</p>
+        
+        <h2>RSVP</h2>
+        <form action="{{ url_for('rsvp', event_id=event.id) }}" method="post">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="status">Status:</label>
+            <select id="status" name="status" required>
+                <option value="Attending">Attending</option>
+                <option value="Not Attending">Not Attending</option>
+                <option value="Maybe">Maybe</option>
+            </select>
+            
+            <button type="submit">Submit RSVP</button>
+        </form>
+        
+        <h2>RSVPs</h2>
+        <ul>
+            {% for rsvp in rsvps %}
+                <li>{{ rsvp.user_name }} ({{ rsvp.user_email }}) - {{ rsvp.status }}</li>
+            {% else %}
+                <li>No RSVPs yet.</li>
+            {% endfor %}
+        </ul>
+        
+        <a class="back-link" href="{{ url_for('admin_dashboard') }}">Back to Home</a>
+    </div>
+</body>
+</html>
